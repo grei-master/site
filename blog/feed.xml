@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title type="text">Blog — Pallets Project</title>
+  <id>urn:uuid:5f37436f-1ad9-32d1-8ef6-4d4a97a3a2bb</id>
+  <updated>2017-05-16T00:00:00Z</updated>
+  <link href="https://github.com/lucassm/blog/" />
+  <link href="https://github.com/lucassm/blog/feed.xml" rel="self" />
+  <generator>Werkzeug</generator>
+  <entry xml:base="https://github.com/lucassm/blog/flask-werkzeug-0122-security-release/">
+    <title type="text">Security bugs on Windows servers: Flask 0.12.2 and Werkzeug 0.12.2 released</title>
+    <id>urn:uuid:0c82fb4d-571c-33e0-ac44-c32ae966c632</id>
+    <updated>2017-05-16T00:00:00Z</updated>
+    <link href="https://github.com/lucassm/blog/flask-werkzeug-0122-security-release/" />
+    <author>
+      <name>Markus Unterwaditzer</name>
+    </author>
+    <content type="html">&lt;p&gt;Flask 0.12.2 and Werkzeug 0.12.2 have been released. They contain the same
+&lt;strong&gt;security bugfix&lt;/strong&gt; for the &lt;code&gt;safe_join&lt;/code&gt; function in each package.&lt;/p&gt;
+&lt;p&gt;The problem only occurs if you are running your application on a Windows
+server.&lt;/p&gt;
+&lt;h2 id=&quot;details&quot;&gt;Details&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://twitter.com/davidism&quot;&gt;David Lord&lt;/a&gt; initially found this bug (thanks!)
+and disclosed it to the other maintainers in a private email:&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;While going through PR #2059 about safe_join, I looked up Python's ntpath.join
+and discovered a vulnerability that safe_join on Windows doesn't cover.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://docs.python.org/3/library/os.path.html#os.path.join&quot;&gt;https://docs.python.org/3/library/os.path.html#os.path.join&lt;/a&gt;:
+&quot;&lt;code&gt;os.path.join(&quot;c:&quot;, &quot;foo&quot;)&lt;/code&gt; represents a path relative to the current
+directory on drive C: &lt;code&gt;(c:foo)&lt;/code&gt;&quot;
+&lt;br&gt;
+&lt;code&gt;safe_join('\\root\\path', 'd:', 'test.txt')&lt;/code&gt; would break out of the trusted
+root directory and instead take the test file relative to the cwd on the d
+drive.  This doesn't give completely arbitrary path access, since it's
+limited to the cwd, but it's still not good.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;For the application developer this means that endpoints using &lt;code&gt;safe_join&lt;/code&gt; could
+potentially be used to disclose arbitrary files in the server processes'
+current working directory on Windows.&lt;/p&gt;
+&lt;h2 id=&quot;what-happens-next&quot;&gt;What happens next&lt;/h2&gt;&lt;p&gt;We strongly recommend upgrading to Flask 0.12.2 and Werkzeug 0.12.2, as this
+bug has been fixed there (&lt;a href=&quot;https://github.com/pallets/flask/pull/2284&quot;&gt;Flask&lt;/a&gt;,
+&lt;a href=&quot;https://github.com/pallets/werkzeug/commit/2497866d7eafa64ca5eb4fb3d1747c05036bf318&quot;&gt;Werkzeug&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;A CVE has been requested on &lt;code&gt;Tue, 16 May 2017 06:51:09 +0000&lt;/code&gt;, the CVE &lt;code&gt;CVE-2017-9088&lt;/code&gt; was assigned.&lt;/p&gt;
+</content>
+  </entry>
+  <entry xml:base="https://github.com/lucassm/blog/werkzeug-012-released/">
+    <title type="text">Werkzeug 0.12 released</title>
+    <id>urn:uuid:77d9f96e-d03c-37a0-8e3e-e1bfc2954317</id>
+    <updated>2017-03-10T00:00:00Z</updated>
+    <link href="https://github.com/lucassm/blog/werkzeug-012-released/" />
+    <author>
+      <name>Markus Unterwaditzer</name>
+    </author>
+    <content type="html">&lt;p&gt;We just released Werkzeug 0.12. Highlights from the changelog:&lt;/p&gt;
+&lt;h2 id=&quot;further-deprecation-of-werkzeug-s-script-module&quot;&gt;Further deprecation of Werkzeug's &lt;code&gt;script&lt;/code&gt; module&lt;/h2&gt;&lt;p&gt;Werkzeug's script module was deprecated since 2011. Deprecation slipped through
+the cracks, so we now additionally show large warnings at runtime. &lt;a href=&quot;https://github.com/pallets/werkzeug/issues/1079&quot;&gt;Head over
+to the bugtracker&lt;/a&gt; for the
+rest of the plan.&lt;/p&gt;
+&lt;h2 id=&quot;defaults-for-password-hashing-changed&quot;&gt;Defaults for password hashing changed&lt;/h2&gt;&lt;p&gt;Password hashing now &lt;a href=&quot;https://github.com/pallets/werkzeug/pull/753&quot;&gt;uses &lt;code&gt;sha256&lt;/code&gt; by default instead of
+&lt;code&gt;sha1&lt;/code&gt;&lt;/a&gt;. On a related note,
+certificates generated with the dev server are now &lt;a href=&quot;https://github.com/pallets/werkzeug/pull/1004&quot;&gt;signed with &lt;code&gt;sha256&lt;/code&gt;
+instead of &lt;code&gt;md5&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+</content>
+  </entry>
+  <entry xml:base="https://github.com/lucassm/blog/jinja-29-released/">
+    <title type="text">Jinja 2.9 Released</title>
+    <id>urn:uuid:31879d5e-7831-3ec7-ad9a-2e490d03c08b</id>
+    <updated>2017-01-07T00:00:00Z</updated>
+    <link href="https://github.com/lucassm/blog/jinja-29-released/" />
+    <author>
+      <name>Armin Ronacher</name>
+    </author>
+    <content type="html">&lt;p&gt;After a long time of no changes a new release, 2.9 codename “Derivation” of the Jinja template engine for Python is out. This change is probably the biggest release in Jinja2's history and it requires a bit of explanation of why it happened and why it happened now. But first let's cover the big changes in it.&lt;/p&gt;
+&lt;h2 id=&quot;new-identifier-tracking&quot;&gt;New Identifier Tracking&lt;/h2&gt;&lt;p&gt;This appears to be an under the hood change because it effectively just changes the internal algorithm that Jinja2 uses to map it's own scoping rules onto the Python interpreter's scoping rules but it has wide ranging consequences. The original tracking issue &lt;a href=&quot;https://github.com/pallets/jinja/issues/19&quot;&gt;goes back to 2011&lt;/a&gt; and was created as a long running TODO item. There were a few reasons why it was implemented this way but over the years it became clearer and clearer that the method chosen for mapping identifiers is just causing too many issues. The reason it was not changed was that the worries were too big that people accidentally relied on such bugs.&lt;/p&gt;
+&lt;p&gt;However with improved support for pinning to older versions of Python packages and the fact that people no longer use linux distribution provided packages much the worries about greater changes are heavily reduced. With Jinja 2.9 the identifier tracking was completely changed which should squash pretty much all the weird behaviors developers might have encountered and also enabled support for related improvements. In particular the new identifier tracking generalized the context behavior for includes and imports.&lt;/p&gt;
+&lt;p&gt;In the ideal case you won't notice anything other than that some constructs are possible now that caused errors in the past.&lt;/p&gt;
+&lt;h2 id=&quot;python-3-feature-support&quot;&gt;Python 3 Feature Support&lt;/h2&gt;&lt;p&gt;While Jinja2 supported Python 3 for years now it never really embraced functionality that the language provides on 3.x that it does not do on 2.x. Largely that is caused by the fact that we want templates to be compatible between 2.x and 3.x (this is true only for as long as template variables are restricted to ASCII characters). However 3.6 now added async generators which permits Jinja2 to fully support the &lt;code&gt;async&lt;/code&gt; and &lt;code&gt;await&lt;/code&gt; keywords on 3.6 and later.&lt;/p&gt;
+&lt;p&gt;In particular it means that you can now return coroutines from functions passed to Jinja2 templates and the template engine will automatically await them. Likewise all filters were updated to work with iterators as well as async iterators alike.&lt;/p&gt;
+&lt;p&gt;Additionally Jinja2 now emits &lt;code&gt;generator_stop&lt;/code&gt; as a future flag which means that accidentally emitting &lt;code&gt;StopIteration&lt;/code&gt; from a filter or other code will no longer cause the template to just stop rendering silently. This was enabled by &lt;a href=&quot;https://www.python.org/dev/peps/pep-0479/&quot;&gt;PEP 479&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;policy-framework&quot;&gt;Policy Framework&lt;/h2&gt;&lt;p&gt;Jinja2 now has an internal policy configuration which permits one to centrally reconfigure behavior of filters and other things. While so far not much can be reconfigured it will greatly support future improvements. This also finally allows us to provide a default &lt;code&gt;tojson&lt;/code&gt; filter which previously was only available through Flask or other frameworks. Through the policy configuration the particular form of JSON serialization can be customized and replaced.&lt;/p&gt;
+&lt;h2 id=&quot;full-changelog&quot;&gt;Full Changelog&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Change cache key definition in environment. This fixes a performance
+regression introduced in 2.8.&lt;/li&gt;
+&lt;li&gt;Added support for &lt;code&gt;generator_stop&lt;/code&gt; on supported Python versions
+(Python 3.5 and later)&lt;/li&gt;
+&lt;li&gt;Corrected a long standing issue with operator precedence of math operations
+not being what was expected.&lt;/li&gt;
+&lt;li&gt;Added support for Python 3.6 async iterators through a new async mode.&lt;/li&gt;
+&lt;li&gt;Added policies for filter defaults and similar things.&lt;/li&gt;
+&lt;li&gt;urlize now sets &quot;rel noopener&quot; by default.&lt;/li&gt;
+&lt;li&gt;Support attribute fallback for old-style classes in 2.x.&lt;/li&gt;
+&lt;li&gt;Support toplevel set statements in extend situations.&lt;/li&gt;
+&lt;li&gt;Restored behavior of Cycler for Python 3 users.&lt;/li&gt;
+&lt;li&gt;Subtraction now follows the same behavior as other operators on undefined
+values.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;map&lt;/code&gt; and friends will now give better error messages if you forgot to
+quote the parameter.&lt;/li&gt;
+&lt;li&gt;Depend on MarkupSafe 0.23 or higher.&lt;/li&gt;
+&lt;li&gt;Improved the &lt;code&gt;truncate&lt;/code&gt; filter to support better truncation in case
+the string is barely truncated at all.&lt;/li&gt;
+&lt;li&gt;Change the logic for macro autoescaping to be based on the runtime
+autoescaping information at call time instead of macro define time.&lt;/li&gt;
+&lt;li&gt;Ported a modified version of the &lt;code&gt;tojson&lt;/code&gt; filter from Flask to Jinja2
+and hooked it up with the new policy framework.&lt;/li&gt;
+&lt;li&gt;Block sets are now marked &lt;code&gt;safe&lt;/code&gt; by default.&lt;/li&gt;
+&lt;li&gt;On Python 2 the asciification of ASCII strings can now be disabled with
+the &lt;code&gt;compiler.ascii_str&lt;/code&gt; policy.&lt;/li&gt;
+&lt;li&gt;Tests now no longer accept an arbitrary expression as first argument but
+a restricted one.  This means that you can now properly use multiple
+tests in one expression without extra parentheses.  In particular you can
+now write &lt;code&gt;foo is divisibleby 2 or foo is divisibleby 3&lt;/code&gt;
+as you would expect.&lt;/li&gt;
+&lt;li&gt;Greatly changed the scoping system to be more consistent with what template
+designers and developers expect.  There is now no more magic difference
+between the different include and import constructs.  Context is now always
+propagated the same way.  The only remaining differences is the defaults
+for &lt;code&gt;with context&lt;/code&gt; and &lt;code&gt;without context&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;with&lt;/code&gt; and &lt;code&gt;autoescape&lt;/code&gt; tags are now built-in.&lt;/li&gt;
+&lt;li&gt;Added the new &lt;code&gt;select_autoescape&lt;/code&gt; function which helps configuring better
+autoescaping easier.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;why-an-update-now?&quot;&gt;Why an Update now?&lt;/h2&gt;&lt;p&gt;One of the reasons Jinja2 was lying largely dormant is that it's always scary to touch something so many people use. While bugs were known for quite some time it requires careful changes to not change all the template code out there. In particular once salt and ansible started using Jinja it became a big emotional burden to do changes on it.&lt;/p&gt;
+&lt;p&gt;However it turns out that emotional burden does not get smaller for as long as those bugs are in there. Going in and cleaning up the behavior actually turns out to be healthier in the long run. Now even if this release introduces regressions in behavior, the internal code quality is much improved and reasoning about the runtime and compiler is a lot easier now.&lt;/p&gt;
+&lt;p&gt;On a personal note I'm happy to see how popular Jinja has become and I hope that with this release it becomes more enjoyable to write Jinja templates.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Aside: if you are downloading Jinja2 you will actually pull 2.9.1 because there was a regression in 2.9 that was only found after releasing it. In an ironic twist it was found when this website attempted to render a complex template with Jinja 2.9 on the build server.&lt;/em&gt;&lt;/p&gt;
+</content>
+  </entry>
+  <entry xml:base="https://github.com/lucassm/blog/jinja-281-released/">
+    <title type="text">Jinja 2.8.1 Security Release</title>
+    <id>urn:uuid:c583b273-7e2b-3950-8cb4-1f7b726283f3</id>
+    <updated>2016-12-29T00:00:00Z</updated>
+    <link href="https://github.com/lucassm/blog/jinja-281-released/" />
+    <author>
+      <name>Armin Ronacher</name>
+    </author>
+    <content type="html">&lt;p&gt;We just pushed out a new release for Jinja (2.8.1) which includes a security related
+fix. If you are using the Jinja2 sandbox you are encouraged to upgrade or alternatively
+manually further lock down the sandbox.&lt;/p&gt;
+&lt;p&gt;The core of the issue is that Python's string format method that was added to strings
+can be used to discover potentially dangerous values including configuration values:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;SECRET_KEY&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;12345&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;... &lt;/span&gt; &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;... &lt;/span&gt;  &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;joe&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;{0.__class__.__init__.__globals__[config]}&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;&amp;quot;{&amp;#39;SECRET_KEY&amp;#39;: &amp;#39;12345&amp;#39;}&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;For this reason &lt;em&gt;you must never let user supply format strings&lt;/em&gt; in raw Python as its
+too easy to escape them. However specifically for the Jinja2 sandbox we changed the
+behavior now that we're using the same sandboxing functionality that Jinja2 uses
+for its own runtime also for Python string formatting.&lt;/p&gt;
+&lt;p&gt;This means that with 2.8.1 and higher templates from sandboxed environments will
+intercept format strings the same way as with normal cases:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;jinja2.sandbox&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SandboxedEnvironment&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;env&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SandboxedEnvironment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;... &lt;/span&gt; &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;... &lt;/span&gt;  &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;from_string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;... &lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;{{ &amp;quot;{0.__class__.__init__.__globals__}&amp;quot;.format(user) }}&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;joe&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;gt&quot;&gt;Traceback (most recent call last):&lt;/span&gt;
+  &lt;span class=&quot;c&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;gr&quot;&gt;jinja2.exceptions.SecurityError&lt;/span&gt;: &lt;span class=&quot;n&quot;&gt;...&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If you don't want or you cannot upgrade Jinja2, you can override the &lt;code&gt;is_safe_attribute&lt;/code&gt;
+method on the sandbox and explicitly disallow all &lt;code&gt;format&lt;/code&gt; attributes on strings.&lt;/p&gt;
+&lt;p&gt;Thank you to &lt;a href=&quot;https://twitter.com/odony&quot;&gt;Olivier Dony&lt;/a&gt; for reporting the issue.&lt;/p&gt;
+</content>
+  </entry>
+  <entry xml:base="https://github.com/lucassm/blog/flask-012-released/">
+    <title type="text">Flask 0.12 released</title>
+    <id>urn:uuid:d0812223-46bf-31f1-8ca0-caa41464049d</id>
+    <updated>2016-12-21T00:00:00Z</updated>
+    <link href="https://github.com/lucassm/blog/flask-012-released/" />
+    <author>
+      <name>Markus Unterwaditzer</name>
+    </author>
+    <content type="html">&lt;p&gt;Flask 0.12 has been released. This is not as big a step as 0.11 has been, the only intentionally backwards-incompatible change is with regards to &lt;code&gt;send_file&lt;/code&gt;'s behavior, which, when invoked as &lt;code&gt;send_file(f)&lt;/code&gt; with &lt;code&gt;f&lt;/code&gt; being a file-like object, no longer guesses the MIME-type from &lt;code&gt;f.name&lt;/code&gt;. You have to pass a filepath instead.&lt;/p&gt;
+&lt;p&gt;Special thanks to &lt;a href=&quot;https://github.com/wgwz&quot;&gt;Kyle Lawlor&lt;/a&gt; for fixing up most documentation after the &lt;code&gt;flask&lt;/code&gt; CLI got introduced.&lt;/p&gt;
+&lt;h2 id=&quot;changelog&quot;&gt;Changelog&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;the cli command now responds to &lt;code&gt;--version&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Mimetype guessing and ETag generation for file-like objects in &lt;code&gt;send_file&lt;/code&gt;
+has been removed, as per issue &lt;code&gt;#104&lt;/code&gt;.  See pull request &lt;code&gt;#1849&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Mimetype guessing in &lt;code&gt;send_file&lt;/code&gt; now fails loudly and doesn't fall back to
+&lt;code&gt;application/octet-stream&lt;/code&gt;. See pull request &lt;code&gt;#1988&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Make &lt;code&gt;flask.safe_join&lt;/code&gt; able to join multiple paths like &lt;code&gt;os.path.join&lt;/code&gt;
+(pull request &lt;code&gt;#1730&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Revert a behavior change that made the dev server crash instead of returning
+a Internal Server Error (pull request &lt;code&gt;#2006&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Correctly invoke response handlers for both regular request dispatching as
+well as error handlers.&lt;/li&gt;
+&lt;li&gt;Disable logger propagation by default for the app logger.&lt;/li&gt;
+&lt;li&gt;Add support for range requests in &lt;code&gt;send_file&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;app.test_client&lt;/code&gt; includes preset default environment, which can now be
+directly set, instead of per &lt;code&gt;client.get&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+  </entry>
+  <entry xml:base="https://github.com/lucassm/blog/flask-011-released/">
+    <title type="text">Flask 0.11 Released</title>
+    <id>urn:uuid:db0ce31b-5ad2-3fba-8d22-33cf56852887</id>
+    <updated>2016-05-29T00:00:00Z</updated>
+    <link href="https://github.com/lucassm/blog/flask-011-released/" />
+    <author>
+      <name>Armin Ronacher</name>
+    </author>
+    <content type="html">&lt;p&gt;After a very long, long waiting time Flask finally got a new release.  There
+really was no good reason that there has not been a release in such a long time
+but unfortunately once things are postponed for too long a certain release
+anxiety kicks in.&lt;/p&gt;
+&lt;p&gt;In this case this was long tagged as 1.0 but we decided for renaming it to
+0.11 and back out some of the more controversial changes.  In particular the
+new command line interface for Flask was modified a bit to not depend on some
+specific functionality in the supporting Click library.&lt;/p&gt;
+&lt;p&gt;Highlights of this release are the improved development experience which now
+stalls the browser on reload instead of bringing up a &quot;connection reset&quot;
+page and the new command line support.&lt;/p&gt;
+&lt;h2 id=&quot;future-plans&quot;&gt;Future Plans&lt;/h2&gt;&lt;p&gt;This is also the first Flask release under the new pallets organization and
+from now on we hope to bring you releases more frequently.  Ideally with the
+next release we also update the website to find a new home for the showcase,
+flask extension list as well as the snippet section to allow the community to
+take care of those things themselves.&lt;/p&gt;
+&lt;h2 id=&quot;changelog&quot;&gt;Changelog&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Added support to serializing top-level arrays to &lt;code&gt;flask.jsonify&lt;/code&gt;. This
+introduces a security risk in ancient browsers. See
+&lt;a href=&quot;http://flask.pocoo.org/docs/0.11/security/#json-security&quot;&gt;json-security&lt;/a&gt;
+for details.&lt;/li&gt;
+&lt;li&gt;Added before_render_template signal.&lt;/li&gt;
+&lt;li&gt;Added &lt;code&gt;**kwargs&lt;/code&gt; to &lt;code&gt;flask.Test.test_client&lt;/code&gt; to support passing
+additional keyword arguments to the constructor of
+&lt;code&gt;flask.Flask.test_client_class&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Added &lt;code&gt;SESSION_REFRESH_EACH_REQUEST&lt;/code&gt; config key that controls the
+set-cookie behavior.  If set to &lt;code&gt;True&lt;/code&gt; a permanent session will be
+refreshed each request and get their lifetime extended, if set to
+&lt;code&gt;False&lt;/code&gt; it will only be modified if the session actually modifies.
+Non permanent sessions are not affected by this and will always
+expire if the browser window closes.&lt;/li&gt;
+&lt;li&gt;Made Flask support custom JSON mimetypes for incoming data.&lt;/li&gt;
+&lt;li&gt;Added support for returning tuples in the form &lt;code&gt;(response, headers)&lt;/code&gt;
+from a view function.&lt;/li&gt;
+&lt;li&gt;Added &lt;code&gt;flask.Config.from_json&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Added &lt;code&gt;flask.Flask.config_class&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Added &lt;code&gt;flask.config.Config.get_namespace&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Templates are no longer automatically reloaded outside of debug mode. This
+can be configured with the new &lt;code&gt;TEMPLATES_AUTO_RELOAD&lt;/code&gt; config key.&lt;/li&gt;
+&lt;li&gt;Added a workaround for a limitation in Python 3.3's namespace loader.&lt;/li&gt;
+&lt;li&gt;Added support for explicit root paths when using Python 3.3's namespace
+packages.&lt;/li&gt;
+&lt;li&gt;Added the &lt;code&gt;flask&lt;/code&gt; command and the &lt;code&gt;flask.cli&lt;/code&gt; module to start the local
+debug server through the click CLI system.  This is recommended over the old
+&lt;code&gt;flask.run()&lt;/code&gt; method as it works faster and more reliable due to a
+different design and also replaces &lt;code&gt;Flask-Script&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Error handlers that match specific classes are now checked first,
+thereby allowing catching exceptions that are subclasses of HTTP
+exceptions (in &lt;code&gt;werkzeug.exceptions&lt;/code&gt;).  This makes it possible
+for an extension author to create exceptions that will by default
+result in the HTTP error of their choosing, but may be caught with
+a custom error handler if desired.&lt;/li&gt;
+&lt;li&gt;Added &lt;code&gt;flask.Config.from_mapping&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Flask will now log by default even if debug is disabled.  The log format is
+now hardcoded but the default log handling can be disabled through the
+&lt;code&gt;LOGGER_HANDLER_POLICY&lt;/code&gt; configuration key.&lt;/li&gt;
+&lt;li&gt;Removed deprecated module functionality.&lt;/li&gt;
+&lt;li&gt;Added the &lt;code&gt;EXPLAIN_TEMPLATE_LOADING&lt;/code&gt; config flag which when enabled will
+instruct Flask to explain how it locates templates.  This should help
+users debug when the wrong templates are loaded.&lt;/li&gt;
+&lt;li&gt;Enforce blueprint handling in the order they were registered for template
+loading.&lt;/li&gt;
+&lt;li&gt;Ported test suite to py.test.&lt;/li&gt;
+&lt;li&gt;Deprecated &lt;code&gt;request.json&lt;/code&gt; in favour of &lt;code&gt;request.get_json()&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Add &quot;pretty&quot; and &quot;compressed&quot; separators definitions in jsonify() method.
+Reduces JSON response size when JSONIFY_PRETTYPRINT_REGULAR=False by removing
+unnecessary white space included by default after separators.&lt;/li&gt;
+&lt;li&gt;JSON responses are now terminated with a newline character, because it is a
+convention that UNIX text files end with a newline and some clients don't
+deal well when this newline is missing. See
+&lt;a href=&quot;https://github.com/pallets/flask/pull/1262&quot;&gt;https://github.com/pallets/flask/pull/1262&lt;/a&gt; -- this came up originally as a
+part of &lt;a href=&quot;https://github.com/kennethreitz/httpbin/issues/168&quot;&gt;https://github.com/kennethreitz/httpbin/issues/168&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;The automatically provided &lt;code&gt;OPTIONS&lt;/code&gt; method is now correctly disabled if
+the user registered an overriding rule with the lowercase-version
+&lt;code&gt;options&lt;/code&gt; (issue &lt;a href=&quot;https://github.com/pallets/flask/issues/1288&quot;&gt;&lt;code&gt;#1288&lt;/code&gt;&lt;/a&gt;).&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://flask.pocoo.org/docs/0.11/api/#flask.json.jsonify&quot;&gt;&lt;code&gt;flask.json.jsonify&lt;/code&gt;&lt;/a&gt; now supports the &lt;code&gt;datetime.date&lt;/code&gt; type (pull request
+&lt;a href=&quot;https://github.com/pallets/flask/pull/1326&quot;&gt;&lt;code&gt;#1326&lt;/code&gt;&lt;/a&gt;).&lt;/li&gt;
+&lt;li&gt;Don't leak exception info of already caught exceptions to context teardown
+handlers (pull request &lt;a href=&quot;https://github.com/pallets/flask/pull/1393&quot;&gt;&lt;code&gt;#1393&lt;/code&gt;&lt;/a&gt;).&lt;/li&gt;
+&lt;li&gt;Allow custom Jinja environment subclasses (pull request &lt;a href=&quot;https://github.com/pallets/flask/pull/1422&quot;&gt;&lt;code&gt;#1422&lt;/code&gt;&lt;/a&gt;).&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://flask.pocoo.org/docs/0.11/api/#flask.g&quot;&gt;&lt;code&gt;flask.g&lt;/code&gt;&lt;/a&gt; now has &lt;code&gt;pop()&lt;/code&gt; and &lt;code&gt;setdefault&lt;/code&gt; methods.&lt;/li&gt;
+&lt;li&gt;Turn on autoescape for &lt;code&gt;flask.templating.render_template_string&lt;/code&gt; by default
+(pull request &lt;a href=&quot;https://github.com/pallets/flask/pull/1515&quot;&gt;&lt;code&gt;#1515&lt;/code&gt;&lt;/a&gt;).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;flask.ext&lt;/code&gt; is now deprecated (pull request &lt;a href=&quot;https://github.com/pallets/flask/pull/1484&quot;&gt;&lt;code&gt;#1484&lt;/code&gt;&lt;/a&gt;).&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://flask.pocoo.org/docs/0.11/api/#flask.send_from_directory&quot;&gt;&lt;code&gt;send_from_directory&lt;/code&gt;&lt;/a&gt; now raises BadRequest if the filename is invalid on
+the server OS (pull request &lt;a href=&quot;https://github.com/pallets/flask/pull/1763&quot;&gt;&lt;code&gt;#1763&lt;/code&gt;&lt;/a&gt;).&lt;/li&gt;
+&lt;li&gt;Added the &lt;code&gt;JSONIFY_MIMETYPE&lt;/code&gt; configuration variable (pull request &lt;a href=&quot;https://github.com/pallets/flask/pull/1728&quot;&gt;&lt;code&gt;#1728&lt;/code&gt;&lt;/a&gt;).&lt;/li&gt;
+&lt;li&gt;Exceptions during teardown handling will no longer leave bad application
+contexts lingering around.&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+  </entry>
+  <entry xml:base="https://github.com/lucassm/blog/werkzeug-0116-security-release/">
+    <title type="text">Werkzeug 0.11.6 Security Release</title>
+    <id>urn:uuid:a22e7827-592f-3bd2-b58d-5c35e338a928</id>
+    <updated>2016-04-14T00:00:00Z</updated>
+    <link href="https://github.com/lucassm/blog/werkzeug-0116-security-release/" />
+    <author>
+      <name>Armin Ronacher</name>
+    </author>
+    <content type="html">&lt;p&gt;Today we pushed out a &lt;a href=&quot;/lucassm/p/werkzeug/&quot;&gt;Werkzeug&lt;/a&gt; bugfix release which contains
+a security relevant fix.  It has come to our attention (reported by &lt;a href=&quot;https://github.com/JordanMilne/&quot;&gt;Jordan Milne&lt;/a&gt;)
+that the PIN brute-force protection in the Werkzeug debugger could be bypassed
+by attacking the cookie rather than the PIN.  While this is generally not easily
+fixable we improved the situation by mixing in higher quality secret data into the
+cookie name and made it more complex.  We now include a UUID of the machine
+the code is running on.&lt;/p&gt;
+&lt;p&gt;This should make it significantly more complex to bypass the PIN check.  That said
+we want to reiterate that the PIN protection for the debugger is &lt;em&gt;not a suitable
+protection to run the debugger in production&lt;/em&gt;.  It's a basic security feature to make
+it less likely to use an accidentally enabled debugger.  Please ensure that you never
+enable the debugger in production environments regardless of this feature.&lt;/p&gt;
+</content>
+  </entry>
+  <entry xml:base="https://github.com/lucassm/blog/hello/">
+    <title type="text">Hello Pallets Users</title>
+    <id>urn:uuid:b39b8b9e-31ca-35f3-92fa-1612b7d299eb</id>
+    <updated>2016-04-01T00:00:00Z</updated>
+    <link href="https://github.com/lucassm/blog/hello/" />
+    <author>
+      <name>Armin Ronacher</name>
+    </author>
+    <content type="html">&lt;p&gt;On the first of April 2010, I released a joke microframework called denied
+which made fun of the fact that all microframeworks at the time decided to
+forgo with dependencies and bundle up everything they need in a single Python
+file.  What I did was embed all of Jinja2 and Werkzeug in a base64 encoded
+zip file within the framework's only Python file.  The response to it was
+interesting in a few ways because on the one hand quite a few people did not
+really understand that it was an April fools joke to begin with and on the
+other, there was a discussion where there were no microframeworks that actually
+did use dependencies and encouraged it.&lt;/p&gt;
+&lt;p&gt;One month later there was a new project by the name of &quot;Flask&quot; which actually
+gave this concept a real shot.  It launched with the tagline &quot;a microframework
+for Python based on Werkzeug, Jinja 2 and good intentions&quot; and six years later
+it's the most starred Python framework on GitHub.&lt;/p&gt;
+&lt;p&gt;What's interesting about Flask is that its success just happened.  There are
+no conferences about it, no society or foundation and still today much of it
+heavily depends on me directly.  I'm not even sure why it became this
+successful but I attribute a lot of it to the fact that it's easy to get
+started and the full footprint of the framework is small enough that it becomes
+easy enough to understand.&lt;/p&gt;
+&lt;p&gt;So what's changing now?  Today we launch the Pallets Projects.  What is it?
+Primarily it's a GitHub organization which will be the home of Flask and all
+the associated projects.  It will be a new home for those libraries and the
+first step to give the community more impact on the development of Flask and
+all libraries.  In addition there will be a new release of Flask very soon
+after a thorough check that we do not break anything.&lt;/p&gt;
+&lt;p&gt;The people behind the Pallets Projects are &lt;a href=&quot;/lucassm/people/mitsuhiko/&quot;&gt;me&lt;/a&gt;,
+&lt;a href=&quot;/lucassm/people/untitaker&quot;&gt;Markus Unterwaditzer&lt;/a&gt;, &lt;a href=&quot;/lucassm/people/davidism/&quot;&gt;David Lord&lt;/a&gt;
+and &lt;a href=&quot;https://github.com/ThiefMaster&quot;&gt;Adrian Mönnich&lt;/a&gt; with the organization
+being open for newcomers to help and drive the projects forward.&lt;/p&gt;
+&lt;p&gt;We will spend the next few weeks adding as much organizational information on
+the project's website to ensure that what often currently only exists in my
+head is brought down to text.&lt;/p&gt;
+&lt;p&gt;I'm amazed how many people use and love Flask and my libraries and I hope that
+this organization will be a good step towards making this scale past me.  It's
+humbling how big all of this became.&lt;/p&gt;
+</content>
+  </entry>
+</feed>
