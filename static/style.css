@@ -83,7 +83,8 @@ pre {
   background-image: -webkit-linear-gradient(top, #f7f7f7 0%,#eee 100%);
   background-image: -o-linear-gradient(top, #f7f7f7 0%,#eee 100%);
   background-image: linear-gradient(to bottom, #f7f7f7 0%,#eee 100%);
-  border: 1px solid #e5e5e5;
+  border: 1px solid rgb(212, 212, 212);
+  box-shadow: rgba(0, 0, 0, 0.067) 0px 1px 4px 0px;
 }
 
 @media (min-width: 768px) {
