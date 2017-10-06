@@ -1,13 +1,18 @@
  @import url('https://fonts.googleapis.com/css?family=Inconsolata|Lato');
+ @import url('https://fonts.googleapis.com/css?family=Poly');
 body {
   padding-top: 20px;
-  font-family: "Lato", sans-serif;
+  font-family: "Poly", serif;
 }
 
 p {
-  font-size: 16px;
-  letter-spacing: 0.333333px;
-  line-height: 23px;
+  font-size: 18px;
+  line-height: 33px;
+  text-align: justify;
+}
+
+li {
+  font-size: 18px;
 }
 
 pre {
@@ -114,6 +119,6 @@ pre {
   }
 }
 
-.membro{
+.equipamento{
   padding: 10px;
 }
