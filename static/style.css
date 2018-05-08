@@ -11,6 +11,12 @@ p {
   text-align: justify;
 }
 
+#banner{
+  padding-top: 15px;
+  font-weight: 700;
+  color: rgba(00, 70, 24);
+}
+
 li {
   font-size: 18px;
 }
