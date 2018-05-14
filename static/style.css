@@ -1,5 +1,6 @@
  @import url('https://fonts.googleapis.com/css?family=Inconsolata|Lato');
  @import url('https://fonts.googleapis.com/css?family=Poly');
+
 body {
   padding-top: 20px;
   font-family: "Poly", serif;
@@ -127,4 +128,10 @@ pre {
 
 .equipamento{
   padding: 10px;
+}
+
+img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto
 }
